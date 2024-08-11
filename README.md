@@ -34,17 +34,22 @@ The plugin allows you to create 2d projectiles that moves toward the target on c
 
 
 ## Usage
-  
-> The "ProjectileOnCurve2D" node can be both a root or subnode in your projectile scene. It does not force a specific node structure, allowing you to create projectiles with any logic and structure needed. Below are a couple of approaches for creating a projectile using "ProjectileOnCurve2D" as a starting point.
 
 1. Install the plugin
 2. Enable the plugin in Godot (Project -> Project Settings -> Plugins Tab)
 3. Use the new node type "ProjectileOnCurve2D" to create projectiles
+
+> The "ProjectileOnCurve2D" node can be both a root or subnode in your projectile scene. It does not force a specific node structure, allowing you to create projectiles with any logic and structure needed. Below are a couple of approaches for creating a projectile using "ProjectileOnCurve2D" as a starting point.
+
 4. Call `launch` method on "ProjectileOnCurve2D" to start the movement
 
 ```
 newProjectile.launch(initialGlobalPosition, targetGlobalPosition, gravity, speed)
 ```
+
+> Adjust the `gravity` param to gain desirable motion curve (the bigger is gravity - the bigger curve angle becomes: 0 gravity will result in a straight trajectory). In "Demo Preview" section below you may see projectiles with different gravity and speed.
+
+> `Speed` param doesn't affect the trajectory curve, only changes the motion speed on it.
 
 
 ### Using "ProjectileOnCurve2D" as root node
