@@ -12,7 +12,10 @@ config_version=5
 
 config/name="ProjectileOnCurve2D plugin"
 config/features=PackedStringArray("4.2", "Mobile")
-config/icon="res://icon.svg"
+
+[display]
+
+window/stretch/mode="viewport"
 
 [editor_plugins]
 
