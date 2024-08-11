@@ -79,3 +79,8 @@ _physics_process(delta):
 - Adjust towers projectile params and run the scene
 
 > If you have already installed the plugin without the "demo" folder, just download it from the current repository and place it in your project, all other steps remain the same.
+
+
+## Demo Preview 
+
+![demo preview](./demoPreview.gif)
