@@ -1,0 +1,54 @@
+[gd_scene load_steps=6 format=3 uid="uid://cgkekb3atnr4a"]
+
+[ext_resource type="PackedScene" uid="uid://efcoe6ka6ncx" path="res://demo/tower/tower.tscn" id="1_3meow"]
+[ext_resource type="Script" path="res://demo/towersDemo.gd" id="1_xail3"]
+[ext_resource type="PackedScene" uid="uid://dpewxjaqijdqf" path="res://demo/immortal/Immortal.tscn" id="5_7rt52"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2dp8p"]
+resource_local_to_scene = true
+radius = 183.044
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_m7i0d"]
+resource_local_to_scene = true
+radius = 332.099
+
+[node name="TowersDemo" type="Node2D"]
+script = ExtResource("1_xail3")
+
+[node name="Tower" parent="." instance=ExtResource("1_3meow")]
+_projectileSpeed = 2
+
+[node name="CollisionShape2D" parent="Tower/Area2D" index="0"]
+shape = SubResource("CircleShape2D_2dp8p")
+
+[node name="Tower2" parent="." instance=ExtResource("1_3meow")]
+position = Vector2(176, 482)
+_projectileSpeed = 1
+_projectileGravity = 50.0
+
+[node name="CollisionShape2D" parent="Tower2/Area2D" index="0"]
+shape = SubResource("CircleShape2D_m7i0d")
+
+[node name="Tower3" parent="." instance=ExtResource("1_3meow")]
+position = Vector2(954, 141)
+_projectileSpeed = 5
+_projectileGravity = 20.0
+
+[node name="CollisionShape2D" parent="Tower3/Area2D" index="0"]
+shape = SubResource("CircleShape2D_2dp8p")
+
+[node name="Tower4" parent="." instance=ExtResource("1_3meow")]
+position = Vector2(959, 482)
+_projectileSpeed = 5
+_projectileGravity = -50.0
+
+[node name="CollisionShape2D" parent="Tower4/Area2D" index="0"]
+shape = SubResource("CircleShape2D_m7i0d")
+
+[node name="Immortal" parent="." instance=ExtResource("5_7rt52")]
+position = Vector2(542, 232)
+
+[editable path="Tower"]
+[editable path="Tower2"]
+[editable path="Tower3"]
+[editable path="Tower4"]

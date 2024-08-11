@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://c7hmbl8t1g44b"]
+
+[ext_resource type="PackedScene" uid="uid://dptqc56trf5r3" path="res://demo/projectile/base/Projectile.tscn" id="1_sfyah"]
+[ext_resource type="Texture2D" uid="uid://ctfue03gdd08e" path="res://demo/projectile/assets/projectile2.png" id="2_j0cqt"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ymkx4"]
+radius = 15.0333
+
+[node name="ProjectileOnCurve2D" instance=ExtResource("1_sfyah")]
+
+[node name="Sprite2D" parent="." index="0"]
+scale = Vector2(0.356831, 0.356831)
+texture = ExtResource("2_j0cqt")
+
+[node name="CollisionShape2D" parent="Projectile" index="0"]
+shape = SubResource("CircleShape2D_ymkx4")
