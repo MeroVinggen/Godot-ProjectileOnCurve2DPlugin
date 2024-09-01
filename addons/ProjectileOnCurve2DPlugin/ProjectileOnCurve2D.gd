@@ -7,6 +7,14 @@ var _velocity: Vector2
 var _stepAmount: int
 
 
+func move() -> void:
+	set_physics_process(true)
+
+
+func stop() -> void:
+	set_physics_process(false)
+
+
 func launch(startPos: Vector2, targetPos: Vector2, grav: float, stepAmount: int = 1) -> void:
 	_gravity = grav
 	_stepAmount = stepAmount
