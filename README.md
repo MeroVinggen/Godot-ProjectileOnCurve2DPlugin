@@ -59,20 +59,25 @@ newProjectile.launch(initialGlobalPosition, targetGlobalPosition, gravity, speed
 In this approach the root node will move it self to the target and provide `launch` function to start the projectile motion. The appearance, collision etc. should be implemented by subnodes
 
 
-### Using "ProjectileOnCurve2D" as subnode
+### Using "ProjectileOnCurve2D" as subnode (not desirable)
 
 If you need your projectile root node to be of any other type (such as Area2D, Sprite2D etc.) your way is to add "ProjectileOnCurve2D" as subnode and extend it's script (or create new any 2D node and extend it's script from "ProjectileOnCurve2D") where you need to synchronize the movement between "ProjectileOnCurve2D" and your projectile scene depending on your goals. 
 
-The "ProjectileOnCurve2D" is moving it self so to make it move your entire projectile scene or a certain nodes you need to overload the `_physics_process` and use the "ProjectileOnCurve2D" `position` in your purposes:
+The "ProjectileOnCurve2D" is moving, rotating and scaling it self so to make it move your entire projectile scene or a certain nodes - you need to inherit and overload the `_physics_process` and use the "ProjectileOnCurve2D" transformations in your purposes:
 
 ```
 _physics_process(delta):
   # the "ProjectileOnCurve2D" motion
   super._physics_process(delta)
 
-  # move the needed node with the "ProjectileOnCurve2D"
+  # sync transformations of your root node with the "ProjectileOnCurve2D"
   owner.position = position
+  owner.rotation = rotation
+  # caution! the "ProjectileOnCurve2D" changes scale.y when target is from the right side
+  owner.scale = scale
 ```
+
+Sure thing you may sync only position and handle rotation/scale manually.
 
 
 ## Demo
