@@ -1,7 +1,7 @@
 extends Area2D
 
 
-func _on_area_entered(area: Area2D) -> void:
+func _on_area_entered(_area: Area2D) -> void:
 	print("hit")
 	owner.queue_free()
 
