@@ -13,8 +13,9 @@ The plugin allows you to create 2d projectiles that moves toward the target on c
 
 ## Features
 
-- Adjusting the angle of a curve
+- Adjusting the angle of a curve by manipulating the projectile gravity
 - Changing the projectile speed without affecting the trajectory
+- Projectile auto rotation along the curve
   
 > The trajectory is calculated only based on gravity, initial and target positions.
 
@@ -37,11 +38,11 @@ The plugin allows you to create 2d projectiles that moves toward the target on c
 
 1. Install the plugin
 2. Enable the plugin in Godot (Project -> Project Settings -> Plugins Tab)
-3. Use the new node type "ProjectileOnCurve2D" to create projectiles
+3. Use the new node type "ProjectileOnCurve2D" to create projectile scene
 
-> The "ProjectileOnCurve2D" node can be both a root or subnode in your projectile scene. It does not force a specific node structure, allowing you to create projectiles with any logic and structure needed. Below are a couple of approaches for creating a projectile using "ProjectileOnCurve2D" as a starting point.
+> The "ProjectileOnCurve2D" node can be both a root or subnode in your projectile scene. It does not force a specific node structure, allowing you to create projectiles with any logic and structure needed. Below are a couple approaches for creating a projectile using "ProjectileOnCurve2D" as a starting point.
 
-4. Call `launch` method on "ProjectileOnCurve2D" to start the movement
+4. Call `launch` method on "ProjectileOnCurve2D" to setup and start the movement
 
 ```
 newProjectile.launch(initialGlobalPosition, targetGlobalPosition, gravity, speed)
@@ -56,7 +57,11 @@ newProjectile.launch(initialGlobalPosition, targetGlobalPosition, gravity, speed
 
 > This approach has been used in the demo where you can find code example of this concept
 
-In this approach the root node will move it self to the target and provide `launch` function to start the projectile motion. The appearance, collision etc. should be implemented by subnodes
+In this approach the "ProjectileOnCurve2D" will be used as root node in new projectile scene, it will move and rotate it self toward the target and provide `launch` function to setup and start the projectile motion. The appearance, collision etc. should be implemented by subnodes. 
+
+If necessary - inherit the "ProjectileOnCurve2D" script for additional logic.
+
+> Note: the "ProjectileOnCurve2D" also changes its scale.y when target is from the right side.
 
 
 ### Using "ProjectileOnCurve2D" as subnode (not desirable)
@@ -73,7 +78,7 @@ _physics_process(delta):
   # sync transformations of your root node with the "ProjectileOnCurve2D"
   owner.position = position
   owner.rotation = rotation
-  # caution! the "ProjectileOnCurve2D" changes scale.y when target is from the right side
+  # caution! the "ProjectileOnCurve2D" changes its scale.y when target is from the right side
   owner.scale = scale
 ```
 
@@ -85,8 +90,8 @@ Sure thing you may sync only position and handle rotation/scale manually.
 > Note: don't forget to check "Requirements" & "Usage" sections.
 
 - Install the plugin and leave "demo" folder as selected
-- Open "demo/towersDemo.tscn" scene
-- Adjust towers projectile params and run the scene
+- Launch "demo/towersDemo.tscn" scene
+- Play around with towers projectile exported params (towers sub-scenes at towersDemo.tscn)
 
 > If you have already installed the plugin without the "demo" folder, just download it from the current repository and place it in your project, all other steps remain the same.
 
