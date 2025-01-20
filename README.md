@@ -53,6 +53,11 @@ newProjectile.launch(initialGlobalPosition, targetGlobalPosition, gravity, speed
 > `Speed` param doesn't affect the trajectory curve, only changes the motion speed on it.
 
 
+## Caution
+
+The "ProjectileOnCurve2D" also changes its `scale.y` when target is from the right side. If you need to use scaling - do it via child/wrapper nodes.
+
+
 ### Using "ProjectileOnCurve2D" as root node
 
 > This approach has been used in the demo where you can find code example of this concept
@@ -60,8 +65,6 @@ newProjectile.launch(initialGlobalPosition, targetGlobalPosition, gravity, speed
 In this approach the "ProjectileOnCurve2D" will be used as root node in new projectile scene, it will move and rotate it self toward the target and provide `launch` function to setup and start the projectile motion. The appearance, collision etc. should be implemented by subnodes. 
 
 If necessary - inherit the "ProjectileOnCurve2D" script for additional logic.
-
-> Note: the "ProjectileOnCurve2D" also changes its scale.y when target is from the right side.
 
 
 ### Using "ProjectileOnCurve2D" as subnode (not desirable)
