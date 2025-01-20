@@ -53,7 +53,7 @@ newProjectile.launch(initialGlobalPosition, targetGlobalPosition, gravity, speed
 > `Speed` param doesn't affect the trajectory curve, only changes the motion speed on it.
 
 
-## Caution
+### Caution
 
 The "ProjectileOnCurve2D" also changes its `scale.y` when target is from the right side. If you need to use scaling - do it via child/wrapper nodes.
 
