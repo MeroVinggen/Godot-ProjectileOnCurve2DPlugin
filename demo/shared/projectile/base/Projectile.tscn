@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://dptqc56trf5r3"]
+
+[ext_resource type="Script" uid="uid://bvo8onrqyhks0" path="res://demo/shared/projectile/base/Projectile.gd" id="1_qcghd"]
+[ext_resource type="Script" uid="uid://bdnl6uuwlfjme" path="res://addons/ProjectileOnCurve2DPlugin/ProjectileOnCurve2D.gd" id="2_kwhjt"]
+
+[node name="ProjectileOnCurve2D" type="Node2D"]
+script = ExtResource("2_kwhjt")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="Projectile" type="Area2D" parent="."]
+monitorable = false
+script = ExtResource("1_qcghd")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Projectile"]
+
+[connection signal="area_entered" from="Projectile" to="Projectile" method="_on_area_entered"]

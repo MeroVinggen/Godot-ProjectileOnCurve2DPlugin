@@ -1,0 +1,68 @@
+[gd_scene load_steps=9 format=3 uid="uid://f2ay3g1tesxj"]
+
+[ext_resource type="Shader" uid="uid://bx24wn3nejudu" path="res://demo/shared/BlinkEffectShader.gdshader" id="1_vjj2e"]
+[ext_resource type="Texture2D" uid="uid://bf8nrknmdsc0h" path="res://demo/2 bows targeting mob on ground/assets/mob.png" id="2_cw2xl"]
+[ext_resource type="Script" uid="uid://dvxx4acnu8ku7" path="res://demo/shared/mob/mob.gd" id="3_cw2xl"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6cxys"]
+shader = ExtResource("1_vjj2e")
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/flash_value = 0.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v82uq"]
+size = Vector2(88, 90)
+
+[sub_resource type="Animation" id="Animation_jjw0v"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/flash_value")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_i4j5f"]
+resource_name = "blink"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/flash_value")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 1.0, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_f0qnj"]
+_data = {
+&"RESET": SubResource("Animation_jjw0v"),
+&"blink": SubResource("Animation_i4j5f")
+}
+
+[node name="Mob" type="Sprite2D"]
+material = SubResource("ShaderMaterial_6cxys")
+texture = ExtResource("2_cw2xl")
+script = ExtResource("3_cw2xl")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_v82uq")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_f0qnj")
+}
+
+[connection signal="area_entered" from="Area2D" to="." method="onCollision"]

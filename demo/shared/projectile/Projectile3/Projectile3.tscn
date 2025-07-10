@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://bg6dlecmw8kaa"]
+
+[ext_resource type="PackedScene" uid="uid://c0axkxxk1uabn" path="res://demo/shared/projectile/Projectile1/projectile1.tscn" id="1_mfmrl"]
+[ext_resource type="Script" uid="uid://utfpnknupksl" path="res://demo/shared/projectile/Projectile3/projectile_3.gd" id="2_57sdk"]
+
+[node name="Projectile3" instance=ExtResource("1_mfmrl")]
+script = ExtResource("2_57sdk")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." index="2"]
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

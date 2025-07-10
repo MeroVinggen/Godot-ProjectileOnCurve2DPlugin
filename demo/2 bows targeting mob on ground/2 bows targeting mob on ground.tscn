@@ -1,0 +1,180 @@
+[gd_scene load_steps=14 format=3 uid="uid://doqv58qqfw4up"]
+
+[ext_resource type="Texture2D" uid="uid://hu74xtqd68a6" path="res://demo/2 bows targeting mob on ground/assets/ground.png" id="1_erget"]
+[ext_resource type="PackedScene" uid="uid://cxiytbnlrjpn2" path="res://demo/shared/bow/bow.tscn" id="2_rhe0v"]
+[ext_resource type="PackedScene" uid="uid://f2ay3g1tesxj" path="res://demo/shared/mob/mob.tscn" id="3_lr5sf"]
+[ext_resource type="PackedScene" uid="uid://c0axkxxk1uabn" path="res://demo/shared/projectile/Projectile1/projectile1.tscn" id="3_rhe0v"]
+[ext_resource type="PackedScene" uid="uid://bh3dxn4gqxu7x" path="res://demo/shared/ProjectileData/ProjectileData.tscn" id="3_w5w74"]
+[ext_resource type="Script" uid="uid://c03han7hrleg4" path="res://demo/2 bows targeting mob on ground/projectile_destroyer.gd" id="6_p2nbo"]
+
+[sub_resource type="Gradient" id="Gradient_p2nbo"]
+colors = PackedColorArray(0, 0.435294, 0.635294, 1, 0.813258, 0.813258, 0.813258, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_kgoi8"]
+gradient = SubResource("Gradient_p2nbo")
+fill_from = Vector2(0, 1)
+fill_to = Vector2(0, 0)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lr5sf"]
+size = Vector2(497, 44)
+
+[sub_resource type="Animation" id="Animation_kgoi8"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(507, 500)]
+}
+
+[sub_resource type="Animation" id="Animation_p2nbo"]
+resource_name = "move"
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(-2, -2),
+"update": 0,
+"values": [Vector2(538, 574), Vector2(966, 574)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_w5w74"]
+_data = {
+&"RESET": SubResource("Animation_kgoi8"),
+&"move": SubResource("Animation_p2nbo")
+}
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_kgoi8"]
+a = Vector2(4000, 0)
+
+[node name="2BowsTargetingMobOnGround" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Bg" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_kgoi8")
+
+[node name="Ground" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -251.0
+offset_top = -50.0
+offset_right = 251.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("1_erget")
+expand_mode = 1
+
+[node name="Area2D" type="Area2D" parent="Ground"]
+position = Vector2(-5, -1)
+collision_layer = 2
+collision_mask = 0
+monitoring = false
+metadata/type = "ground"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground/Area2D"]
+position = Vector2(256.5, 28)
+shape = SubResource("RectangleShape2D_lr5sf")
+
+[node name="Bow2" parent="." node_paths=PackedStringArray("target") instance=ExtResource("2_rhe0v")]
+position = Vector2(57, 165)
+rotation = -0.156026
+scale = Vector2(0.3, 0.3)
+target = NodePath("../Mob")
+projectileScene = ExtResource("3_rhe0v")
+projectileParams = Array[Dictionary]([{
+"gravity": 0,
+"speed": 5
+}, {
+"gravity": 50,
+"speed": 5
+}, {
+"gravity": 100,
+"speed": 5
+}, {
+"gravity": 500,
+"speed": 5
+}])
+
+[node name="ProjectileData2" parent="." node_paths=PackedStringArray("projectileShoter") instance=ExtResource("3_w5w74")]
+offset_left = 25.0
+offset_top = 293.0
+offset_right = 182.0
+offset_bottom = 377.0
+projectileShoter = NodePath("../Bow2")
+
+[node name="Bow4" parent="." node_paths=PackedStringArray("target") instance=ExtResource("2_rhe0v")]
+position = Vector2(1412, 386)
+rotation = -3.00431
+scale = Vector2(0.3, 0.3)
+target = NodePath("../Mob")
+projectileScene = ExtResource("3_rhe0v")
+projectileParams = Array[Dictionary]([{
+"gravity": 0,
+"speed": 15
+}, {
+"gravity": 50,
+"speed": 15
+}, {
+"gravity": 100,
+"speed": 15
+}, {
+"gravity": 500,
+"speed": 15
+}])
+
+[node name="ProjectileData4" parent="." node_paths=PackedStringArray("projectileShoter") instance=ExtResource("3_w5w74")]
+offset_left = 1306.0
+offset_top = 506.0
+offset_right = 1463.0
+offset_bottom = 590.0
+projectileShoter = NodePath("../Bow4")
+
+[node name="Mob" parent="." instance=ExtResource("3_lr5sf")]
+position = Vector2(507, 500)
+scale = Vector2(0.631579, 0.631579)
+
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="Mob"]
+libraries = {
+&"": SubResource("AnimationLibrary_w5w74")
+}
+autoplay = "move"
+speed_scale = 0.25
+
+[node name="ProjectileDestroyer" type="Area2D" parent="."]
+position = Vector2(-871, 0)
+collision_layer = 0
+collision_mask = 4
+monitorable = false
+script = ExtResource("6_p2nbo")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ProjectileDestroyer"]
+position = Vector2(-176, 839)
+shape = SubResource("SegmentShape2D_kgoi8")
+
+[connection signal="area_entered" from="ProjectileDestroyer" to="ProjectileDestroyer" method="_on_area_entered"]

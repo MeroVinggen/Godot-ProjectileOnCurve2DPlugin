@@ -1,0 +1,175 @@
+[gd_scene load_steps=12 format=3 uid="uid://dvg3lik12wq4p"]
+
+[ext_resource type="Script" uid="uid://dpf3jtoypyruu" path="res://demo/test/test.gd" id="1_58uvt"]
+[ext_resource type="PackedScene" uid="uid://fyaym1ha8btg" path="res://demo/shared/bowManual/bowManual.tscn" id="2_fdh3n"]
+[ext_resource type="PackedScene" uid="uid://dpewxjaqijdqf" path="res://demo/immortal/Immortal.tscn" id="2_r2ghm"]
+[ext_resource type="PackedScene" uid="uid://cxiytbnlrjpn2" path="res://demo/shared/bow/bow.tscn" id="3_fdh3n"]
+[ext_resource type="PackedScene" uid="uid://bg6dlecmw8kaa" path="res://demo/projectile/Projectile3/Projectile3.tscn" id="4_3pwwm"]
+[ext_resource type="Texture2D" uid="uid://4wxqs4ctjn2x" path="res://demo/2 bows targeting mob on ground/assets/aim.png" id="5_3pwwm"]
+
+[sub_resource type="Gradient" id="Gradient_fdh3n"]
+colors = PackedColorArray(0.298217, 0.544757, 0.346332, 1, 0.793489, 0.545272, 0.649483, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_3pwwm"]
+gradient = SubResource("Gradient_fdh3n")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fdh3n"]
+resource_local_to_scene = true
+size = Vector2(60, 157)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3pwwm"]
+resource_local_to_scene = true
+size = Vector2(60, 58)
+
+[sub_resource type="Gradient" id="Gradient_r2ghm"]
+colors = PackedColorArray(1, 1, 1, 0.639216, 1, 1, 1, 0)
+
+[node name="Test" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("1_58uvt")
+trajectory_points = 200
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_3pwwm")
+
+[node name="ImmortalBow" parent="." instance=ExtResource("2_r2ghm")]
+position = Vector2(584, 377)
+
+[node name="ColorRect" parent="ImmortalBow" index="0"]
+visible = false
+
+[node name="Area2D" parent="ImmortalBow" index="1"]
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape2D" parent="ImmortalBow/Area2D" index="0"]
+position = Vector2(3, 4.5)
+shape = SubResource("RectangleShape2D_fdh3n")
+
+[node name="Label" parent="ImmortalBow" index="2"]
+offset_left = -32.0
+offset_top = -105.0
+offset_right = 34.0
+offset_bottom = -82.0
+text = "drag me"
+
+[node name="bowManual" parent="ImmortalBow" node_paths=PackedStringArray("target") instance=ExtResource("2_fdh3n")]
+visible = false
+scale = Vector2(0.372, 0.372)
+target = NodePath("../../ImmortalAim")
+projectileScene = ExtResource("4_3pwwm")
+
+[node name="Bow1" parent="ImmortalBow" instance=ExtResource("3_fdh3n")]
+
+[node name="ImmortalAim" parent="." instance=ExtResource("2_r2ghm")]
+position = Vector2(889, 346)
+
+[node name="ColorRect" parent="ImmortalAim" index="0"]
+visible = false
+
+[node name="TextureRect" type="TextureRect" parent="ImmortalAim"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_right = 60.0
+offset_bottom = 59.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_3pwwm")
+expand_mode = 1
+
+[node name="Area2D" parent="ImmortalAim" index="2"]
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape2D" parent="ImmortalAim/Area2D" index="0"]
+shape = SubResource("RectangleShape2D_3pwwm")
+
+[node name="Label" parent="ImmortalAim" index="3"]
+offset_left = -49.0
+offset_top = -33.0
+offset_right = 99.0
+offset_bottom = -10.0
+text = "drag me"
+horizontal_alignment = 1
+
+[node name="DirectionMarker2D" type="Marker2D" parent="ImmortalAim"]
+position = Vector2(31, 27)
+
+[node name="Label" type="Label" parent="."]
+offset_left = 628.0
+offset_top = 35.0
+offset_right = 681.0
+offset_bottom = 58.0
+text = "gravity"
+
+[node name="graviryTextEdit" type="TextEdit" parent="."]
+offset_left = 589.0
+offset_top = 70.0
+offset_right = 720.0
+offset_bottom = 110.0
+text = "10"
+placeholder_text = "gravity"
+
+[node name="Label2" type="Label" parent="."]
+offset_left = 818.0
+offset_top = 37.0
+offset_right = 871.0
+offset_bottom = 60.0
+text = "speed"
+
+[node name="speedTextEdit2" type="TextEdit" parent="."]
+offset_left = 779.0
+offset_top = 70.0
+offset_right = 910.0
+offset_bottom = 110.0
+text = "10"
+placeholder_text = "speed"
+
+[node name="Line2D" type="Line2D" parent="."]
+gradient = SubResource("Gradient_r2ghm")
+
+[node name="Control" type="Control" parent="."]
+anchors_preset = 0
+offset_left = 1356.0
+offset_top = 599.0
+offset_right = 1396.0
+offset_bottom = 639.0
+
+[node name="ColorRect" type="ColorRect" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -6.0
+offset_top = -9.0
+offset_right = 90.0
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.435294)
+
+[node name="Label" type="Label" parent="Control"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "right click - shot"
+
+[connection signal="text_changed" from="graviryTextEdit" to="." method="onDataUpdated"]
+[connection signal="text_changed" from="speedTextEdit2" to="." method="onDataUpdated"]
+
+[editable path="ImmortalBow"]
+[editable path="ImmortalAim"]

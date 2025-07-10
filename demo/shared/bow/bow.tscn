@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://cxiytbnlrjpn2"]
+
+[ext_resource type="Texture2D" uid="uid://bkixarmgmwpss" path="res://demo/2 bows targeting mob on ground/assets/bow.png" id="1_qwsg7"]
+[ext_resource type="Script" uid="uid://dn65vxxo0gp7y" path="res://demo/shared/bow/bow.gd" id="2_55dce"]
+
+[node name="Bow1" type="Sprite2D"]
+scale = Vector2(0.376, 0.376)
+texture = ExtResource("1_qwsg7")
+script = ExtResource("2_55dce")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="shot"]
