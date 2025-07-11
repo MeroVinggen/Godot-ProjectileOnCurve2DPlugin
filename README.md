@@ -52,7 +52,7 @@ The plugin allows you to create 2d projectiles that moves toward the target on c
 ![projectile-scene1](./readme-assets/projectile-scene1.jpg)
 
 > [!TIP]
-> You can use `ProjectileOnCurve2D` as subnode for your projectiles, this is covered in [Using-`ProjectileOnCurve2D`-as-root-node](#Using-`ProjectileOnCurve2D`-as-root-node)
+> You can use `ProjectileOnCurve2D` as subnode for your projectiles, this is covered in [Using as subnode](#using-projectileoncurve2d-as-subnode-less-performant)
 
 2. Add nodes for visual representation and collision handing
 
