@@ -27,7 +27,10 @@ The plugin allows you to create 2d projectiles that moves toward the target on c
 
 ## Requirements 
 
-- Godot 4.2 or higher
+- Godot 4.0 or higher
+  
+> [!IMPORTANT]
+> This project uses Godot 4.4.1. You can edit it with Godot 4.2+, but the addon works from 4.0+
 
 
 ## Installation
@@ -41,45 +44,65 @@ The plugin allows you to create 2d projectiles that moves toward the target on c
 
 ## Usage
 
+> [!TIP]
+> You may find projectile scene example in the project at "res://demo/shared/projectile/"
+
 1. Create new projectile scene by inheriting the `ProjectileOnCurve2D` scene
-   
-> The `ProjectileOnCurve2D` node can be both a root or subnode in your projectile scene. It does not force a specific node structure, allowing you to create projectiles with any logic and structure needed. Below are a couple approaches for creating a projectile using `ProjectileOnCurve2D` as a starting point.
 
-> You may find projectile scene example at "res://demo/shared/projectile/"
+![projectile-scene1](./readme-assets/projectile-scene1.jpg)
 
-2. Instantiate projectile and call `launch` method to setup and start the movement
+> [!TIP]
+> You can use `ProjectileOnCurve2D` as subnode for your projectiles, this is covered in [Using-`ProjectileOnCurve2D`-as-root-node](#Using-`ProjectileOnCurve2D`-as-root-node)
 
+2. Add nodes for visual representation and collision handing
+
+![projectile-scene1](./readme-assets/projectile-scene2.jpg)
+
+3. extend the root script to add the projectile logic
+
+```gdscript 
+# connect `area_entered` signal of `Area2D` node to this func
+
+func _on_area_entered(_area: Area2D) -> void:
+  # destroy projectile on collision
+  queue_free() 
 ```
-newProjectile.launch(initialGlobalPosition, targetGlobalPosition, arcHeight, speed)
+
+4. Instantiate the projectile and call `launch` to start the movement
+
+```gdscript 
+# in your test scene
+
+var projectile1: PackedScene = load(<path to your projectile scene>)
+
+func shot() -> void:
+  var newProjectile: ProjectileOnCurve2D = projectile1.instantiate()
+  newProjectile.launch(startPos, targetPos, arcHeight, speed)
+  add_child.call_deferred(newProjectile)
 ```
-> Node: `ProjectileOnCurve2D` is moving during physics ticks
 
-> Adjust the `arcHeight` param to gain desirable motion curve (the bigger is `arcHeight` - the bigger curve angle becomes: 0 `arcHeight` will result in a straight trajectory). In "Demo Preview" section below you may see projectiles with different `arcHeight` and speed.
+### Methods
 
-> `Speed` param doesn't affect the trajectory curve, only changes the motion speed on it.
+- `launch(startPos, targetPos, arcHeight, speed)` - projectile launch
+  - `startPos` - start movement position
+  - `targetPos` - movement target position (projectile won't stop if reaches it)
+  - `arcHeight` - controls the height of the visual arc (higher values make the curve more pronounced; zero makes it a straight line, you can see it in [demo preview](#Demo-Preview))
+  - `speed` - projectile velocity (doesn't affect the trajectory)
 
-> You can stop the projectile movement by calling `stop` method and resume it with `move` method
+- `stop()` - pause motion
+- `move()` - resume motion
+- `step(delta: float)` - manual motion step call
 
+> [!IMPORTANT]
+> `ProjectileOnCurve2D` is moving during `physics` ticks
 
-### Caution
-
-The `ProjectileOnCurve2D` also changes its `scale.y` when target is from the right side. If you need to use scaling - do it via child/wrapper nodes.
-
-The `ProjectileOnCurve2D` doesn't use real physics simulation, the projectile always will hit it's target
-
-
-### Using `ProjectileOnCurve2D` as root node
-
-> This approach has been used in the demos where you can find code example of this concept
-
-In this approach the `ProjectileOnCurve2D` will be used as root node in new projectile scene, it will move and rotate it self toward the target and provide `launch` function to setup and start the projectile motion. The appearance, collision etc. should be implemented by subnodes. 
-
-If necessary - inherit the `ProjectileOnCurve2D` script for additional logic.
+> [!WARNING]
+> The `ProjectileOnCurve2D` changes its `scale.y` when the target is to its left
 
 
-### Using `ProjectileOnCurve2D` as subnode (not desirable)
+### Using `ProjectileOnCurve2D` as subnode (less performant)
 
-If you need your projectile root node to be of any other type (such as Area2D, Sprite2D etc.) your way is to add `ProjectileOnCurve2D` as subnode and extend it's script (or create new any 2D node and extend it's script from `ProjectileOnCurve2D`) where you need to synchronize the movement between `ProjectileOnCurve2D` and your projectile scene depending on your goals. 
+If you need your projectile root node to be of any other type (such as Area2D, Sprite2D etc.) your way is to add `ProjectileOnCurve2D` as subnode and extend it's script, where you need to synchronize the movement between `ProjectileOnCurve2D` node and your projectile scene, depending on your goals. 
 
 The `ProjectileOnCurve2D` is moving, rotating and scaling it self so to make it move your entire projectile scene or a certain nodes - you need to inherit and overload the `_physics_process` and use the `ProjectileOnCurve2D` transformations in your purposes:
 
@@ -100,9 +123,11 @@ Sure thing you may sync only position and handle rotation/scale manually.
 
 ## Demo
 
-> Note: don't forget to check "Requirements" & "Usage" sections.
+> [!WARNING]
+> Don't forget to check [Requirements](#Requirements) section
 
 - Install the plugin and leave "demo" folder as selected
 - Launch "res://demo/2 bows targeting mob on ground/2 bows targeting mob on ground.tscn" or "res://demo/BowWithAim/BowWithAim.tscn" scene
 
-> If you have already installed the plugin without the "demo" folder, just download it from the current repository and place it in your project, all other steps remain the same.
+> [!TIP]
+> If you have already installed the plugin without the "demo" folder, just reinstall it or download the "demo" folder from the current repository and place it in your project, all the other steps remain the same
