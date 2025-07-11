@@ -106,7 +106,7 @@ If you need your projectile root node to be of any other type (such as Area2D, S
 
 The `ProjectileOnCurve2D` is moving, rotating and scaling it self so to make it move your entire projectile scene or a certain nodes - you need to inherit and overload the `_physics_process` and use the `ProjectileOnCurve2D` transformations in your purposes:
 
-```
+```gdscript
 _physics_process(delta):
   # the `ProjectileOnCurve2D` motion
   super._physics_process(delta)
