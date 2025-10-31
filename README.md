@@ -12,6 +12,12 @@
   </a>
 </p>
 
+## See my other plugins
+
+- [Android Internet Connection State](https://github.com/MeroVinggen/Godot-AndroidInternetConnectionStatePlugin)
+- [
+Vector2 editor](https://github.com/MeroVinggen/Godot-Vector2ArrayEditorPlugin)
+- [Threaded Resource Save-Load](https://github.com/MeroVinggen/Godot-ThreadedResourceSaveLoadPlugin)
 
 ## About
 
