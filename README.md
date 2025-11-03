@@ -18,6 +18,8 @@
 - [
 Vector2 editor](https://github.com/MeroVinggen/Godot-Vector2ArrayEditorPlugin)
 - [Threaded Resource Save-Load](https://github.com/MeroVinggen/Godot-ThreadedResourceSaveLoadPlugin)
+- [Awaiter](https://github.com/MeroVinggen/Godot-AwaiterPlugin)
+  
 
 ## About
 
